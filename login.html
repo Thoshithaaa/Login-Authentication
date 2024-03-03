@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Authentication System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type="submit"] {
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .error {
+      color: red;
+      margin-top: 5px;
+    }
+
+    .success {
+      color: green;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <input type="submit" value="Login">
+      <p id="loginMessage" class="error"></p>
+    </form>
+    <p>Don't have an account? <a href="#" id="registerLink">Register</a></p>
+  </div>
+
+  <div id="registerFormContainer" class="container" style="display: none;">
+    <h2>Register</h2>
+    <form id="registerForm">
+      <input type="text" id="regUsername" placeholder="Username" required>
+      <input type="password" id="regPassword" placeholder="Password" required>
+      <input type="submit" value="Register">
+      <p id="registerMessage" class="error"></p>
+    </form>
+    <p>Already have an account? <a href="#" id="loginLink">Login</a></p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const registerLink = document.getElementById('registerLink');
+      const loginLink = document.getElementById('loginLink');
+
+      registerLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('registerFormContainer').style.display = 'block';
+        document.getElementById('loginForm').style.display = 'none';
+      });
+
+      loginLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('registerFormContainer').style.display = 'none';
+        document.getElementById('loginForm').style.display = 'block';
+      });
+
+      loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        // Here you can perform authentication with a backend or any other method you prefer
+        if (username === 'user' && password === 'password') {
+          document.getElementById('loginMessage').textContent = 'Login successful';
+          document.getElementById('loginMessage').classList.remove('error');
+          document.getElementById('loginMessage').classList.add('success');
+          // Redirect to secured page or perform other actions
+        } else {
+          document.getElementById('loginMessage').textContent = 'Invalid username or password';
+          document.getElementById('loginMessage').classList.remove('success');
+          document.getElementById('loginMessage').classList.add('error');
+        }
+      });
+
+      registerForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const regUsername = document.getElementById('regUsername').value;
+        const regPassword = document.getElementById('regPassword').value;
+        // Here you can perform registration logic with a backend or any other method you prefer
+        // For simplicity, let's assume registration is successful
+        document.getElementById('registerMessage').textContent = 'Registration successful';
+        document.getElementById('registerMessage').classList.remove('error');
+        document.getElementById('registerMessage').classList.add('success');
+        // Automatically switch to login form after successful registration
+        setTimeout(function() {
+          document.getElementById('registerFormContainer').style.display = 'none';
+          document.getElementById('loginForm').style.display = 'block';
+          document.getElementById('username').value = regUsername; // Populate username field
+        }, 1500);
+      });
+    });
+  </script>
+</body>
+</html>
